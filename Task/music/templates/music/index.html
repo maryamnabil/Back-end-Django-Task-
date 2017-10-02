@@ -1,0 +1,33 @@
+<!--hena ana 3wza a3rfo path l static files -->
+{% extends 'music/basic.html' %}
+{% block title %}Index{% endblock%}
+{% block body %}
+	<h1>Here are all of my albums </h1>
+	{% if object_list %}
+
+		<ul>
+		{% for album in object_list  %}
+		 	<div class="col-sm-4 col-lg-2">
+		 	<div class="thumbnail">
+			<li><a href="{% url 'music:detail' album.id %}">{{album.album_title}}</a></li>
+			 <form action="{% url 'music:album-delete' album.id %}" method="post" style="display:inline;">
+		{% csrf_token %}
+		<input type="hidden" name="album_id" value=" {{ album.id }}"/>
+		<button type="submit" class="btn btn-default btn-sm">
+			<span class="glyphicon glyphicon-trash"></span>
+		</button>
+		</form>
+		<!--Album-logo-->
+		<a href=" {% url 'music:detail' album.id %}">
+			<img src="{{alum.album_logo.url}}" class="image-responseive">
+			</a>
+		</div>
+		</div>
+		{% endfor %}
+		
+		</ul>
+		{% else %}
+		<h2>There is no Albums to Display</h2>
+	{% endif %}
+
+{% endblock %}
